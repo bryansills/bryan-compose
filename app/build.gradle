@@ -1,8 +1,12 @@
-apply plugin: 'com.android.application'
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+// Required(?) Gradle Plugins for Compose
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("AndroidXPlugin")
+    id("AndroidXUiPlugin")
+}
 
 android {
     compileSdkVersion 28
@@ -20,12 +24,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    // Required Kotlin compiler configuration for Compose
+    tasks.withType(KotlinCompile).configureEach {
+        kotlinOptions {
+            useIR = true
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.30-compose-20190503"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.30-compose-20190503" // Required Kotlin version for Compose
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
+
+    // Required dependencies for Compose
+    kotlinPlugin project(path: ":compose-plugin-cli-gradle", configuration: "pluginForGradle")
+    implementation project(":compose-runtime")
+    implementation project(':ui-material')
+    implementation project(":ui-framework")
+    implementation project(":ui-layout")
+
     testImplementation 'junit:junit:4.12'
 }
