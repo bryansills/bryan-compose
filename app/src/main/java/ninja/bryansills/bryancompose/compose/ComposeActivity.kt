@@ -3,12 +3,14 @@ package ninja.bryansills.bryancompose.compose
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
+import androidx.compose.getValue
+import androidx.compose.setValue
 import androidx.compose.state
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
 import androidx.ui.layout.Column
+import androidx.ui.material.Button
 import androidx.ui.material.MaterialTheme
-import androidx.ui.material.TextButton
 
 class ComposeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +36,7 @@ fun Body() {
                 text = "This is the current count: $count",
                 style = MaterialTheme.typography.body2
             )
-            TextButton(onClick = { count += 1 }) { Text(text = "THIS IS A BUTTON") }
+            Button(onClick = { count += 1 }) { Text(text = "THIS IS A BUTTON") }
         }
     }
 }
