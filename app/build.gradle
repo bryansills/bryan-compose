@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "ninja.bryansills.bryancompose"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -27,14 +27,22 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
     }
 
     buildFeatures {
         compose true
+        // Disable unused AGP features
+        buildConfig false
+        aidl false
+        renderScript false
+        resValues false
+        shaders false
     }
 
     composeOptions {
         kotlinCompilerExtensionVersion = versions.compose
+        kotlinCompilerVersion versions.kotlin
     }
 }
 
@@ -43,8 +51,8 @@ dependencies {
     implementation deps.androidx.core
     implementation deps.androidx.appcompat
     implementation deps.material
-    implementation deps.compose.framework
-    implementation deps.compose.layout
-    implementation deps.compose.material
-    implementation deps.compose.tooling
+    implementation "androidx.compose.foundation:foundation-layout:${versions.compose}"
+    implementation "androidx.compose.runtime:runtime:${versions.compose}"
+    implementation "androidx.compose.ui:ui-tooling:${versions.compose}"
+    implementation "androidx.compose.material:material:${versions.compose}"
 }
